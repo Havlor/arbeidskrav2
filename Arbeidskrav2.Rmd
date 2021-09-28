@@ -8,10 +8,22 @@ output: html_document
 
 #filtr can be used to filter observations based on their value. Operations for comparisons can be used to subest the data set. ! x (NOT x) x & y (x AND y)X strek(??) Y (X eller Y). Test if a value is missing(NA), is a number or character. is.na (), is.numeric(),is.character() 
 
+library(readxl)
+data_til_laktatprofil <- read_excel("data til laktatprofil.xlsx")
+View(data_til_laktatprofil)
+
+dat <- "data_til_laktatprofil"
+
 library(tidyverse)
-library(exscidata); data("cyclingstudy")
-cyclingstudy %>% 
-  filter(is.na(lac.375)) %>%
+
+dat %>%
+  select(FP,time,lac75:lac300) %>%
+  filter(time == "pre", subject ==1)
+
+
+library(tidyverse)
+dat %>% 
+  filter(is.na(lac100)) %>%
   print()
 
 
@@ -145,3 +157,12 @@ myfun(3,6)
 
 
 ```
+
+library(readxl)
+data_til_laktatprofil <- read_excel("data til laktatprofil.xlsx")
+View(data_til_laktatprofil)
+
+data <- "data_til_laktatprofil"
+
+library(tidyverse)
+glimpse(data)
