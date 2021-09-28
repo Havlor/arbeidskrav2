@@ -1,0 +1,170 @@
+---
+title: "Arbeidskrav2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+
+#filtr can be used to filter observations based on their value. Operations for comparisons can be used to subest the data set. ! x (NOT x) x & y (x AND y)X strek(??) Y (X eller Y). Test if a value is missing(NA), is a number or character. is.na (), is.numeric(),is.character() 
+
+library(tidyverse)
+library(exscidata); data("cyclingstudy")
+cyclingstudy %>% 
+  filter(is.na(lac.375)) %>%
+  print()
+
+
+#select function can select variables and rename them. Helper functions can be used to select from a large number of variables. eg. starts_with() ends with()
+
+cyclingstudy %>%
+  select(height = height.T1) %>%
+  print()
+
+cyclingstudy %>% 
+  select(subject,group,timepoint, starts_with("lac")) %>% 
+  print()
+
+#mutate brukes for å skape nye variabler eller skrive over eksisterende variabler. transmute() keeps only the created variable
+
+cyclingstudy %>% 
+  mutate(height = height.T1 + 100) %>%
+  select(subject, height, height.T1) %>%
+  print()
+
+#group.by functinos groups a data table (data frame or tibble). Dataseted deles opp. It can be used with mutate or summarise
+
+cyclingstudy %>% 
+  select(subject, group, height.T1) %>%
+  group_by(group) %>%
+  mutate(height_group = height.T1 / max(height.T1, na.rm = TRUE)) %>%
+  print()
+
+#pivot longer reshpaes the data to information from variable names. Pivot wider og pivot longer kan bytte på kolonner og rader(?) verdier til tekst og tekst til verdier kan byttes om. values to og names to, eller values from og names from.
+           
+```
+
+
+```{r}
+
+#introduksjon til statistiske modeller. Eks. regresjonsmodeller(?). Verdien på y aksen forklares av verdien på x aksen. Relasjonelt forhold mellom verdien på x-aksen og y-aksen. 
+
+library(exscidata); library(tidyverse)
+
+data ("hypertrophy")
+
+dat <- hypertrophy %>%
+  select(PARTICIPANT, DXA_LBM_T1:DXA_LBM_T3, RNA_T1:RNA_T3) %>%
+  pivot_longer(names_to = "variable",
+             values_to = "value",
+             cols = DXA_LBM_T1:RNA_T3) %>%
+  mutate(variable = gsub("_LBM","",variable)) %>%
+  separate(variable, into = c("variable", "time")) %>%
+  pivot_wider(names_from = variable, 
+              values_from = value) %>%
+  pivot_wider(names_from = time,
+              values_from = c(DXA, RNA)) %>%
+  
+  mutate(DXA_change = DXA_T3 - DXA_T1, 
+         RNA_change = RNA_T2 - RNA_T1) %>%
+  
+  print()
+  
+# fit the model
+#lm - hva betyr funksjonen? Koden? 
+
+m1 <- lm(DXA_change ~ RNA_change, data = dat)
+
+summary(m1)
+
+#hvis nullhypotesen stemte, skulle resultatet 
+#estimatet i utregningen sier noe om relasjonen (regresjonen) mellom de to verdiene?
+#modellen er det beskrivende, 
+
+
+#kolon betyr eksempelvis RNA_T1 TIL(:) T#)
+```
+
+```{r}
+
+# mangler første del av kode fra undervisning, cyclingstudy til filter og videre. Ggplot funksjon er stort sett riktig. 
+
+
+cyclingstudy %>%
+select(subject group, timepoint, lac.125:lac.375) %>%
+  pivot_longer(names_to = "watt", 
+               values_to = "lactate",
+               names_prefix = "lac",
+               names_transform = list(watt = as.numeric),
+               cols = lac.125:lac375) %>%
+  filter(subject = 10, 
+        timepoint = "pre",
+       !is.na(lactate) )
+  
+
+
+
+  ggplot(aes(watt,lactate)) + geom_point()+
+  geom_smooth(method = lm, se = FALSE) +
+  geom_smooth(method = lm, se = FALSE, formula = y  ~ poly(x,2),
+              color = "red") +
+  geom_smooth(method = lm, se = FALSE, formula = y  ~ poly(x,4), 
+              color = "black")
+  
+  #fit the model 
+  
+  model <- lm(lactate  ~ watt + I(watt^2) + I(watt^3), data = dat)
+  
+  predict(model)
+  
+  #predict funksjonen predikerer hva vi oberserer for hver variabel? Vi kan i new data velger hvilke x-verdier vi ønsker å predikere? 
+  
+  #funksjonen seq (sequence). Dette kan legges i en data frame
+  
+  seq(from = 125, to = 350, by = 0.1)
+  
+  new.data  data.frame(seq(from = 125, to = 350, by = 0.1))
+            
+```
+
+
+```{r}
+
+#i R kan man også skrive funksjoner. lagrer funksjonen i et objekt, spesifiserer hvilke argument som skal finnesi funksjonen. eks. a og b. Den funksjonen skal gi svaret på a*b, erstatter man a og b med tall, så skal funksjnen gi svar på a*b. Koden avlsluttes med return for å spesifisere hva den skal gi tilbake. eks. results.
+
+myfun <- function(a,b) {
+  
+  results <- a*b
+  
+  return(results)
+  
+
+}
+
+myfun(3,6)
+
+
+```
