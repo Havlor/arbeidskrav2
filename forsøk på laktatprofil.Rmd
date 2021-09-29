@@ -1,0 +1,35 @@
+---
+title: "lac"
+author: "Håvard Crantz Lorentzen"
+date: "28 9 2021"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(readxl)
+
+
+dat<- read_excel("data til laktatprofil.xlsx", na="NA")
+
+
+lac <- dat %>%
+  # Select columns needed for analysis
+  select(FP, time, lac.75:lac.300) %>%
+  # Only one participant and time-point
+  filter(time == "pre", FP == 6) %>%
+  # Pivot to long format data using the lactate columns
+  pivot_longer(names_to = "watt", 
+               values_to = "lactate", 
+               names_prefix = "lac.",
+               names_transform = list(watt = as.numeric),
+               cols = lac.75:lac.300) %>%
+   # Remove NA (missing) values to avoid warning/error messages.
+  filter(!is.na(lactate))%>%
+  # Plot the data, group = subject needed to connect the points
+  ggplot(aes(watt, lactate, group = FP))  + 
+  geom_line(lty = 2) +
+  geom_point(shape = 21, fill = "lightblue", size = 2.5)
+```
+
