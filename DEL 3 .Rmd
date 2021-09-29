@@ -24,7 +24,11 @@ hypertrophy %>%
   pivot_wider(names_from = variable, 
               values_from = value) %>%
   
-  print()
+ ggplot(aes(TESTOSTERONE, DXA)) + geom_point()
+
+  pivot_wider(names_from = time, 
+              values_from = c(TESTOSTORONE, DXA)) %>%
+print()
 
 ```
 
