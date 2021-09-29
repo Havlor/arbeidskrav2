@@ -12,23 +12,29 @@ data("hypertrophy")
 glimpse(hypertrophy)
 
 
-hypertrophy %>%
+dat <- hypertrophy %>%
   select(PARTICIPANT, DXA_LBM_T1:DXA_LBM_T3, TESTOSTERONE_T1:TESTOSTERONE_T3) %>%
   
   pivot_longer(names_to = "variable",
                values_to = "value",
                cols = DXA_LBM_T1:TESTOSTERONE_T3) %>%
   mutate(variable = gsub("_LBM", "", variable)) %>%
-  separate(variable, into = c("variable", "time")) %>%
+  separate(variable, into = c("variable", "time"), sep = "_") %>%
   
   pivot_wider(names_from = variable, 
               values_from = value) %>%
   
- ggplot(aes(TESTOSTERONE, DXA)) + geom_point()
+  pivot_wider(names_from = time,
+             values_from = c(DXA, TESTOSTERONE)) %>%
+  
+  mutate(DXA_change = DXA_T3 - DXA_T1,
+         TESTOSTERONE_T3 - TESTOSTERONE_T1) %>%
+  print()
+  
+  
+ 
 
-  pivot_wider(names_from = time, 
-              values_from = c(TESTOSTORONE, DXA)) %>%
-print()
+
 
 ```
 
