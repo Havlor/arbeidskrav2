@@ -24,16 +24,22 @@ dat <- hypertrophy %>%
   pivot_wider(names_from = variable, 
               values_from = value) %>%
   
+  ggplot(aes(TESTOSTERONE, DXA)) + geom_point() %>%
+  
   pivot_wider(names_from = time,
              values_from = c(DXA, TESTOSTERONE)) %>%
   
   mutate(DXA_change = DXA_T3 - DXA_T1,
          TESTOSTERONE_T3 - TESTOSTERONE_T1) %>%
-  print()
-  
-  
- 
 
+  print()
+
+
+# Fit the model
+
+m1 <- lm(DXA_change ~ TESTOSTERONE_T3, data = dat)
+
+summary(m1) 
 
 
 ```
