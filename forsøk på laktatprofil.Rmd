@@ -188,6 +188,14 @@ lactate3 <- lactate %>%
 ```{r}
 glimpse(lactate3)
 
+lactate4 <- lactate3 %>%
+  group_by(FP) %>%
+  mutate(n = n()) %>%
+  filter(n == 2) %>%
+  print()
+
+         
+         
 ```
 
 
