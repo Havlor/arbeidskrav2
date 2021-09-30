@@ -197,14 +197,14 @@ pivot_wider(names_from = time, values_from = c(watt.4mmol, watt.2mmol)) %>%
 
     
 TE <- lactate4 %>%
-  mutate(diff =  - trial1) %>% # Change/difference score
+  mutate(diff = watt.4mmol_post - watt.4mmol_pre) %>% # Change/difference score
   summarise(s = sd(diff),  # Summarize to calculate sd, and... 
-            m = mean(c(trial1, trial2)), # mean
+            m = mean(c(watt.4mmol_post, watt.4mmol_pre)), # mean
             te = s / sqrt(2), 1, # the typical error.
             cv = 100 * (te / m), 1, 
             L = qt(0.975, 4) * s) %>%  # Calculate as a percentage of the mean
   print()
-         
+
 ```
 
 
