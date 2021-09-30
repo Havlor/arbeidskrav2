@@ -30,6 +30,9 @@ lac <- dat %>%
   # Plot the data, group = subject needed to connect the points
   ggplot(aes(watt, lactate, group = FP))  + 
   geom_line(lty = 2) +
-  geom_point(shape = 21, fill = "lightblue", size = 2.5)
+  geom_point(shape = 21, fill = "lightblue", size = 2.5) +
+# Adding straight lines at specific values
+  geom_hline(yintercept = 4, color = "red") +
+  geom_vline(xintercept = 341.5, color = "blue")
 ```
 
