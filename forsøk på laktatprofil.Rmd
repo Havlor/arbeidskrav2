@@ -160,7 +160,7 @@ lt <- function(data) {
 
   # Create a results data frame
   results <- data.frame(watt.4mmol = new_data[which.min(new_data$watt.4mmol),1])
-  
+
   # Return the data frame
   return(results)
   
