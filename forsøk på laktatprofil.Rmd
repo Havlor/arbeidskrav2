@@ -9,6 +9,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(readxl)
+library(ggplot2)
 
 
 dat<- read_excel("data til laktatprofil.xlsx", na="NA")
@@ -43,8 +44,7 @@ lactate <- dat %>%
   # poly(x, 3) add a third degree polynomial model.
   geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, 3), color = "#4daf4a") +
   # poly(x, 4) add a forth degree polynomial model.
-  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, 4), color = "#ff7f00") %>%
-print()
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, 4), color = "#ff7f00") 
 ```
 
 
@@ -88,7 +88,7 @@ lactate$resid.m2 <- resid(m2)
 lactate$resid.m3 <- resid(m3)
 lactate$resid.m4 <- resid(m4)
 
-lac %>%
+lactate %>%
   # gather all the data from the models
   pivot_longer(names_to = "model", 
                values_to = "residual", 
@@ -105,11 +105,12 @@ lac %>%
 #new data data frame
 ndf <- data.frame(watt = seq(from = 125, to = 275, by = 0.1)) # high resolution, we can find the nearest10:th a watt
 
-ndf$predictions <- predict(m3, newdata = ndf)
+ndf$predictions <- predict(m4, newdata = ndf)
 
-lactate_threshold <- ndf %>%
+lactate_threshold4 <- ndf %>%
   filter(abs(predictions - 4) == min(abs(predictions - 4)))
  
-
+lactate_threshold2 <- ndf %>%
+  filter(abs(predictions - 2) == min(abs(predictions - 2)))
 ```
 
