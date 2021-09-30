@@ -21,11 +21,15 @@ dat <- hypertrophy %>%
   
   mutate(DXA_change = DXA_LBM_T3 - DXA_LBM_T1) %>%
   
+  #group_by() %>%
+  #mutate(testoavg. = testoavg. - mean(testoavg.)) %>%
+  
   select(PARTICIPANT, testoavg., DXA_change) %>%
   
   filter(! is.na(testoavg.)) %>%
   
   print()
+  
   
  #pivot_wider(names_from = variable, 
   #            values_from = value) %>%
@@ -51,13 +55,9 @@ summary(m1)
 
 #Reg.
 
- hypertrophy %>%
-   filter
-        select(PARTICIPANT, testoavg., DXA_change) %>%
-         ggplot(aes(testoavg., DXA_change)) + geom_point(size = 3, fill = "lightblue", shape = 21) +
-         theme_minimal()
- 
- print()
+library(broom) 
+
+tidy(m1)
  
  
 ```
