@@ -15,22 +15,26 @@ glimpse(hypertrophy)
 dat <- hypertrophy %>%
   select(PARTICIPANT, DXA_LBM_T1:DXA_LBM_T3, TESTOSTERONE_T1:TESTOSTERONE_T3) %>%
   
-  pivot_longer(names_to = "variable",
-               values_to = "value",
-               cols = DXA_LBM_T1:TESTOSTERONE_T3) %>%
-  mutate(variable = gsub("_LBM", "", variable)) %>%
-  separate(variable, into = c("variable", "time"), sep = "_") %>%
+  rowwise() %>%
+  mutate(testoavg. = mean(c(TESTOSTERONE_T1, TESTOSTERONE_T2, TESTOSTERONE_T3))) %>%
+  
+  ungroup() %>%
+  
+  mutate(DXA_change = DXA_LBM_T3 - DXA_LBM_T1) %>%
+  
+  select(PARTICIPANT, testoavg., DXA_change) %>%
+  
+  print()
   
   pivot_wider(names_from = variable, 
               values_from = value) %>%
   
-  ggplot(aes(TESTOSTERONE, DXA)) + geom_point() %>%
-  
   pivot_wider(names_from = time,
              values_from = c(DXA, TESTOSTERONE)) %>%
   
-  mutate(DXA_change = DXA_T3 - DXA_T1,
-         TESTOSTERONE_T3 - TESTOSTERONE_T1) %>%
+  
+  
+  pivot_wider()
 
   print()
 
@@ -42,5 +46,18 @@ m1 <- lm(DXA_change ~ TESTOSTERONE_T3, data = dat)
 summary(m1) 
 
 
+
+
+#Reg.
+
+ hypertrophy %>%
+   filter(time  "T1", "T2", "T3") %>%
+        select(PARTICIPANT, TESTOSTERONE, DXA) %>%
+         ggplot(aes(TESTOSTERONE, DXA1)) + geom_point(size = 3, fill = "lightblue", shape = 21) +
+         theme_minimal()
+ 
+ print()
+ 
+ 
 ```
 
