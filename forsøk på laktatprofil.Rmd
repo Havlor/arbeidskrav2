@@ -125,24 +125,63 @@ lactate2 <- lactate %>%
                names_prefix = "lac.", 
               names_transform = list(watt = as.numeric), 
               cols = lac.75:lac.300) %>%
-  filter(PF == 6, 
+  filter(FP == 6, 
          time == "pre", 
          !is.na(lactate)) %>% # Remove NA values
   print()
 
 # Fit the model 
-model <- lm(lactate ~ watt + I(watt^2) + I(watt^3), data = dat)
+model <- lm(lactate ~ watt + I(watt^2) + I(watt^3), data = lactate2)
 
 
 # Predict lactate values over all observed watt values
 # calculate the smallest distance from the fixed lactate value 
 
-new_data <- data.frame(watt = seq(from = min(dat$watt), to = max(dat$watt), by = 0.1))
+new_data <- data.frame(watt = seq(from = min(lactate2$watt), to = max(lactate2$watt), by = 0.1))
 
 new_data$dist <- abs(predict(model, newdata = new_data) - 4)
 
 # Find the smallest value of predicted - fixed lacate value
 new_data %>%
   filter(dist == min(dist)) # Where the dist value equals the minimum dist value
+lt <- function(data) {
+  
+  # Fit a 3 degree polynomial model
+  m <- lm(lactate ~ watt + I(watt^2) + I(watt^3), data = data)
+  
+  # Store a data frame with exercise intensities
+  new_data <- data.frame(watt = seq(from = min(data$watt), to = max(data$watt), by = 0.01))
+  
+  # Predict using the new data, predicting lactate values at each 
+  new_data$pred <- predict(m, newdata = new_data)
+  
+  # calculate deviation from the lactate value of interest
+  new_data$watt.4mmol <- abs(new_data$pred - 4)
+
+  # Create a results data frame
+  results <- data.frame(watt.4mmol = new_data[which.min(new_data$watt.4mmol),1])
+  
+  # Return the data frame
+  return(results)
+  
+}
+
+
+lactate3 <- lactate %>%
+  select(FP, time, lac.75:lac.300) %>%
+  pivot_longer(names_to = "watt", 
+               values_to = "lactate", 
+               names_prefix = "lac.", 
+              names_transform = list(watt = as.numeric), 
+              cols = lac.75:lac.300) %>%
+  filter(!is.na(lactate)) %>% # Remove NA values
+  group_by(time, FP) %>%
+   mutate(n = n()) %>%
+  filter(n >= 4) %>%
+  # Use grouup modify to apply the function to all participants per time-point (and group)
+  group_modify(~ lt(.)) %>%
+  print()
+
 ```
+
 
