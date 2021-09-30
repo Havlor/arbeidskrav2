@@ -12,10 +12,10 @@ library(readxl)
 library(ggplot2)
 
 
-dat<- read_excel("data til laktatprofil.xlsx", na="NA")
+lactate <- read_excel("data til laktatprofil.xlsx", na="NA")
 
 
-lactate <- dat %>%
+lactate %>%
   # Select columns needed for analysis
   select(FP, time, lac.75:lac.300) %>%
   # Only one participant and time-point
@@ -45,18 +45,18 @@ lactate <- dat %>%
   geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, 3), color = "#4daf4a") +
   # poly(x, 4) add a forth degree polynomial model.
   geom_smooth(method = "lm", se = FALSE, formula = y ~ poly(x, 4), color = "#ff7f00") 
+
 ```
 
 
 ```{r}
 library(tidyverse)
 library(readxl)
+library(ggplot2)
 
+lactate <- read_excel("data til laktatprofil.xlsx", na="NA")
 
-dat<- read_excel("data til laktatprofil.xlsx", na="NA")
-
-
-lactate <- dat %>%
+lactate1 <- lactate %>%
   # Select columns needed for analysis
   select(FP, time, lac.75:lac.300) %>%
   # Only one participant and time-point
@@ -71,24 +71,24 @@ lactate <- dat %>%
   filter(!is.na(lactate))
 
 # fit "straight line" model
-m1 <- lm(lactate ~ watt, data = lactate)
+m1 <- lm(lactate ~ watt, data = lactate1)
 
 # fit second degree polynomial
-m2 <- lm(lactate ~ poly(watt, 2, raw = TRUE), data = lactate)
+m2 <- lm(lactate ~ poly(watt, 2, raw = TRUE), data = lactate1)
 
 # fit third degree polynomial
-m3 <- lm(lactate ~ poly(watt, 3, raw = TRUE), data = lactate)
+m3 <- lm(lactate ~ poly(watt, 3, raw = TRUE), data = lactate1)
 
 # fit forth degree polynomial
-m4 <- lm(lactate ~ poly(watt, 4, raw = TRUE), data = lactate)
+m4 <- lm(lactate ~ poly(watt, 4, raw = TRUE), data = lactate1)
 
 # Store all residuals as new variables
-lactate$resid.m1 <- resid(m1)
-lactate$resid.m2 <- resid(m2)
-lactate$resid.m3 <- resid(m3)
-lactate$resid.m4 <- resid(m4)
+lactate1$resid.m1 <- resid(m1)
+lactate1$resid.m2 <- resid(m2)
+lactate1$resid.m3 <- resid(m3)
+lactate1$resid.m4 <- resid(m4)
 
-lactate %>%
+lactate1 %>%
   # gather all the data from the models
   pivot_longer(names_to = "model", 
                values_to = "residual", 
@@ -112,5 +112,37 @@ lactate_threshold4 <- ndf %>%
  
 lactate_threshold2 <- ndf %>%
   filter(abs(predictions - 2) == min(abs(predictions - 2)))
+```
+
+```{r}
+
+lactate <- read_excel("data til laktatprofil.xlsx", na="NA")
+
+lactate2 <- lactate %>%
+  select(FP, time, lac.75:lac.300) %>%
+  pivot_longer(names_to = "watt", 
+               values_to = "lactate", 
+               names_prefix = "lac.", 
+              names_transform = list(watt = as.numeric), 
+              cols = lac.75:lac.300) %>%
+  filter(PF == 6, 
+         time == "pre", 
+         !is.na(lactate)) %>% # Remove NA values
+  print()
+
+# Fit the model 
+model <- lm(lactate ~ watt + I(watt^2) + I(watt^3), data = dat)
+
+
+# Predict lactate values over all observed watt values
+# calculate the smallest distance from the fixed lactate value 
+
+new_data <- data.frame(watt = seq(from = min(dat$watt), to = max(dat$watt), by = 0.1))
+
+new_data$dist <- abs(predict(model, newdata = new_data) - 4)
+
+# Find the smallest value of predicted - fixed lacate value
+new_data %>%
+  filter(dist == min(dist)) # Where the dist value equals the minimum dist value
 ```
 
