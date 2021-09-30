@@ -157,9 +157,10 @@ lt <- function(data) {
   
   # calculate deviation from the lactate value of interest
   new_data$watt.4mmol <- abs(new_data$pred - 4)
+  new_data$watt.2mmol <- abs(new_data$pred - 2)
 
   # Create a results data frame
-  results <- data.frame(watt.4mmol = new_data[which.min(new_data$watt.4mmol),1])
+  results <- data.frame(watt.4mmol = new_data[which.min(new_data$watt.4mmol),1], watt.2mmol = new_data[which.min(new_data$watt.2mmol),1])
 
   # Return the data frame
   return(results)
@@ -181,6 +182,11 @@ lactate3 <- lactate %>%
   # Use grouup modify to apply the function to all participants per time-point (and group)
   group_modify(~ lt(.)) %>%
   print()
+
+```
+
+```{r}
+glimpse(lactate3)
 
 ```
 
