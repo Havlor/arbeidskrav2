@@ -210,13 +210,17 @@ TE4 <- lactate4 %>%
   print()
 
 TE2 <- lactate4 %>%
-  mutate(diff = watt.2mmol_post - watt.2mmol_pre) %>% # Change/difference score
+  mutate(diff = watt.2mmol_post - watt.2mmol_pre) %>% 
+   ungroup() %>%# Change/difference score
   summarise(s = sd(diff),  # Summarize to calculate sd, and... 
             m = mean(c(watt.2mmol_post, watt.2mmol_pre)), # mean
             te = s / sqrt(2), 1, # the typical error.
             cv = 100 * (te / m), 1, 
             L = qt(0.975, 4) * s) %>%  # Calculate as a percentage of the mean
   print()
+
+TE2
+TE4
 
 ```
 
