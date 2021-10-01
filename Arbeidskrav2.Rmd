@@ -6,8 +6,6 @@ output: html_document
 
 ```{r}
 
-#filtr can be used to filter observations based on their value. Operations for comparisons can be used to subest the data set. ! x (NOT x) x & y (x AND y)X strek(??) Y (X eller Y). Test if a value is missing(NA), is a number or character. is.na (), is.numeric(),is.character() 
-
 library(readxl)
 data_til_laktatprofil <- read_excel("data til laktatprofil.xlsx")
 View(data_til_laktatprofil)
@@ -15,11 +13,24 @@ View(data_til_laktatprofil)
 dat <- "data_til_laktatprofil"
 
 library(tidyverse)
+library(dplyr)
 
-dat %>%
+data_til_laktatprofil %>%
   select(FP,time,lac75:lac300) %>%
-  filter(time == "pre", subject ==1)
+  filter(time == "pre", FP ==1) %>%
 
+ pivot_longer(names_to = "watt", 
+               values_to = "lactate", 
+               names_prefix = "lac",
+               names_transform = list(watt = as.numeric),
+               cols = lac100:lac225) %>%
+  print()
+   
+  # Plot the data, group = subject needed to connect the points
+  ggplot(aes(watt, lactate, group = subject))  + 
+  geom_line(lty = 2) +
+    
+  geom_point(shape = 21, fill = "lightblue", size = 2.5) 
 
 library(tidyverse)
 dat %>% 
@@ -44,7 +55,7 @@ cyclingstudy %>%
   select(subject, height, height.T1) %>%
   print()
 
-#group.by functinos groups a data table (data frame or tibble). Dataseted deles opp. It can be used with mutate or summarise
+#group.by funct groups a data table (data frame or tibble). Dataseted deles opp. It can be used with mutate or summarise
 
 cyclingstudy %>% 
   select(subject, group, height.T1) %>%
@@ -89,7 +100,7 @@ m1 <- lm(DXA_change ~ RNA_change, data = dat)
 
 summary(m1)
 
-#hvis nullhypotesen stemte, skulle resultatet 
+
 #estimatet i utregningen sier noe om relasjonen (regresjonen) mellom de to verdiene?
 #modellen er det beskrivende, 
 
