@@ -3,11 +3,11 @@ title: "16.3"
 output: html_document
 author: Margit Dahl sørensen, Hermann Moen 
 editor_options: 
+output: html_document 
   chunk_output_type: console
 ---
-
+## 16.3 
 ```{r}
-
 library(exscidata); library(tidyverse)
 data("hypertrophy")
 glimpse(hypertrophy)
@@ -29,8 +29,7 @@ dat <- hypertrophy %>%
   
   filter(! is.na(testoavg.)) %>%
   
-
-
+  
 # Fit the model
 
 m1 <- lm(DXA_change ~ testoavg., data = dat)
@@ -38,7 +37,7 @@ m1 <- lm(DXA_change ~ testoavg., data = dat)
 summary(m1) 
 
 
-#Reg.
+#Reg
 
 library(broom) 
 
@@ -49,8 +48,8 @@ tidy(m1)
 
 dat %>%
   ggplot(aes(testoavg., DXA_change)) + geom_point(shape = 19) + theme_minimal() + geom_smooth(method = "lm") + labs(x = "Gjennomsnittlig testosteron", y = "Endring i DXA") 
-
-  
-  
 ```
 
+##16.3 
+I datasettet hypertrophy, eks
+Testosterone er et potent anabolsk hormon, som stimulerer muskel protein syntesen[1,2], og forbedrer intramuskulært opptak av aminosyrer,[3] som sammen resulterer i en forbedring i total protein balanse.[4] Basert på dette ønsket vi å se på korrelasjonen mellom 
