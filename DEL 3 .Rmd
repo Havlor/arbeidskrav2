@@ -28,20 +28,6 @@ dat <- hypertrophy %>%
   
   filter(! is.na(testoavg.)) %>%
   
-  #print()
-  
-  
- #pivot_wider(names_from = variable, 
-  #            values_from = value) %>%
-  
-  #pivot_wider(names_from = time,
-  #           values_from = c(DXA, TESTOSTERONE)) %>%
-  
-  
-  
-  #pivot_wider()
-
- # print()
 
 
 # Fit the model
@@ -63,9 +49,9 @@ tidy(m1)
 #plotte figur
 
 dat %>%
-  ggplot(aes(DXA_change, testoavg.)) + geom_point() + theme_minimal() %>%
-  abline(lm(DXA_change ~ testoavg.)) %>%
+  ggplot(aes(testoavg., DXA_change)) + geom_point() + theme_minimal() + geom_smooth(method = "lm")
+
   
-  print()
+  
 ```
 
