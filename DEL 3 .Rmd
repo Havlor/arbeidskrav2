@@ -1,6 +1,7 @@
 ---
-title: "Test 1"
+title: "16.3"
 output: html_document
+author: Margit Dahl sørensen, Hermann Moen 
 editor_options: 
   chunk_output_type: console
 ---
@@ -21,27 +22,13 @@ dat <- hypertrophy %>%
   
   mutate(DXA_change = DXA_LBM_T3 - DXA_LBM_T1) %>%
   
-  #group_by() %>%
-  #mutate(testoavg. = testoavg. - mean(testoavg.)) %>%
+  group_by() %>%
+  mutate(testoavg. = testoavg. - mean(testoavg.)) %>%
   
   select(PARTICIPANT, testoavg., DXA_change) %>%
   
   filter(! is.na(testoavg.)) %>%
   
-  print()
-  
-  
- #pivot_wider(names_from = variable, 
-  #            values_from = value) %>%
-  
-  #pivot_wider(names_from = time,
-  #           values_from = c(DXA, TESTOSTERONE)) %>%
-  
-  
-  
-  #pivot_wider()
-
- # print()
 
 
 # Fit the model
@@ -51,14 +38,19 @@ m1 <- lm(DXA_change ~ testoavg., data = dat)
 summary(m1) 
 
 
-
-
 #Reg.
 
 library(broom) 
 
 tidy(m1)
  
- 
+
+#plotte figur
+
+dat %>%
+  ggplot(aes(testoavg., DXA_change)) + geom_point(shape = 19) + theme_minimal() + geom_smooth(method = "lm") + labs(x = "Gjennomsnittlig testosteron", y = "Endring i DXA") 
+
+  
+  
 ```
 
