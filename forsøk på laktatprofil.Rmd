@@ -219,9 +219,9 @@ TE2 <- lactate4 %>%
             L = qt(0.975, 4) * s) %>%  # Calculate as a percentage of the mean
   print()
 
-TE2
-TE4
 
 ```
+´r roundTE2$te´
+
 
 
