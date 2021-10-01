@@ -21,14 +21,14 @@ dat <- hypertrophy %>%
   
   mutate(DXA_change = DXA_LBM_T3 - DXA_LBM_T1) %>%
   
-  #group_by() %>%
-  #mutate(testoavg. = testoavg. - mean(testoavg.)) %>%
+  group_by() %>%
+  mutate(testoavg. = testoavg. - mean(testoavg.)) %>%
   
   select(PARTICIPANT, testoavg., DXA_change) %>%
   
   filter(! is.na(testoavg.)) %>%
   
-  print()
+  #print()
   
   
  #pivot_wider(names_from = variable, 
@@ -59,6 +59,13 @@ library(broom)
 
 tidy(m1)
  
- 
+
+#plotte figur
+
+dat %>%
+  ggplot(aes(DXA_change, testoavg.)) + geom_point() + theme_minimal() %>%
+  abline(lm(DXA_change ~ testoavg.)) %>%
+  
+  print()
 ```
 
