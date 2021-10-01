@@ -188,8 +188,6 @@ lactate3 <- lactate %>%
 ```
 
 ```{r}
-glimpse(lactate3)
-
 lactate4 <- lactate3 %>%
   group_by(FP) %>%
   mutate(n = n()) %>%
@@ -210,13 +208,22 @@ TE4 <- lactate4 %>%
   print()
 
 TE2 <- lactate4 %>%
-  mutate(diff = watt.2mmol_post - watt.2mmol_pre) %>% # Change/difference score
+  mutate(diff = watt.2mmol_post - watt.2mmol_pre) %>% 
+   ungroup() %>%# Change/difference score
   summarise(s = sd(diff),  # Summarize to calculate sd, and... 
             m = mean(c(watt.2mmol_post, watt.2mmol_pre)), # mean
             te = s / sqrt(2), 1, # the typical error.
             cv = 100 * (te / m), 1, 
             L = qt(0.975, 4) * s) %>%  # Calculate as a percentage of the mean
-  print()
+
+  cv4 <- round(TE4$cv, 2)
+  cv2 <- round(TE2$cv, 2)
+  
+  
+  ## Resultater  Typefeil er ved 4mmol laktat er `r cv4`% og ved 2mmol laktat er den `r cv2`%
+```
+
+```{r}
 
 ```
 
