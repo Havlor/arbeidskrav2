@@ -1,6 +1,7 @@
 ---
-title: "Test 1"
+title: "16.3"
 output: html_document
+author: Margit Dahl sørensen, Hermann Moen 
 editor_options: 
   chunk_output_type: console
 ---
@@ -37,8 +38,6 @@ m1 <- lm(DXA_change ~ testoavg., data = dat)
 summary(m1) 
 
 
-
-
 #Reg.
 
 library(broom) 
@@ -49,7 +48,7 @@ tidy(m1)
 #plotte figur
 
 dat %>%
-  ggplot(aes(testoavg., DXA_change)) + geom_point() + theme_minimal() + geom_smooth(method = "lm")
+  ggplot(aes(testoavg., DXA_change)) + geom_point(shape = 19) + theme_minimal() + geom_smooth(method = "lm") + labs(x = "Gjennomsnittlig testosteron", y = "Endring i DXA") 
 
   
   
