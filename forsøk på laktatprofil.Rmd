@@ -275,4 +275,45 @@ preds <- exp(predict(cal, newdata = unknown)
 ```
 
 
+```{r}
+
+library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(dplyr)
+
+ladder <- data.frame(dist = c(29, 43.5, 60.5, #x-verdier skal inn her
+                              80.5, 106.5,  141.5,  
+                              181.5,    243.5,  281.5,
+                              328.5,    390.5,  465.5,  580.5), 
+                     mw = c(1000, 900, 800, 
+                            700, 600, 500,
+                            400, 300, 250, 
+                            200, 150, 100, 50))
+            
+
+# Create a new data frame of unknowns
+unknown <- data.frame(dist = c(470.5,   391.5,  528.5,
+                               421.5,   507.5)) #overskuddsdata skal inn her. Like mange 
+
+ladder %>%
+  ggplot(aes(dist,log(mw)) + geom_point() + geom_smooth(method = "lm")
+         
+
+mod <- lm (log(mw) tilde dist, data = ladder)
+
+preds <- exp(predict(cal, newdata = unknown)
+
+summary(mod)
+
+ #Fit the model
+cal <- lm(log(mw) ~ dist, data = ladder)
+
+# Check model performance, R^2 should be ~ 1.
+summary(cal)
+         
+
+dna_fragment
+    
+```
 
