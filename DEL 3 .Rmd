@@ -34,7 +34,8 @@ dat <- hypertrophy %>%
 
 m1 <- lm(DXA_change ~ testoavg., data = dat)
 
-summary(m1) 
+summary(m1)
+
 
 
 #Reg
