@@ -52,7 +52,7 @@ dat %>%
 ```
 
 ##16.3 
-I datasettet hypertrophy finner vi forskjellige variabler tilknyttet muskelvekst. Blandt annet eksisterte det testosterone ved tre tidspunkt, og mager kroppsmasse målt i DXA ved tre tidspunkter. Vi ville se på en eventuell korrelasjon mellom den gjennomsnittlige testosteronverdien  og endringen i mager kroppsmasse fra test 1 til 3. 
+I datasettet hypertrophy finner vi flere forskjellige variabler tilknyttet muskelvekst. Blandt annet finnes det en måling av deltakernes testosteron verdier ved tre tidspunkt fra intervensjonen, og mager kroppsmasse målt i DXA ved tre tidspunkter. Vi ville se på en eventuell korrelasjon mellom den gjennomsnittlige testosteronverdien  og endringen i mager kroppsmasse fra test 1 til 3. 
 
 Testosterone er et potent anabolsk hormon, som stimulerer muskel protein syntesen[1,2], og forbedrer intramuskulært opptak av aminosyrer,[3] som sammen resulterer i en forbedring i total protein balanse.[4] Basert på dette ser vi for oss at testosteron nivået, vil ha en positiv innvirkning på endringen i mager kroppsmasse.  
 
