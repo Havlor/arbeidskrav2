@@ -229,10 +229,7 @@ Typefeil er ved 4mmol laktat er `r cv4`% og ved 2mmol laktat er den `r cv2`%
 
 ```{r}
 # Create a data frame of known distances and molecular weights
-ladder <- data.frame(dist = c(29, 43.5, 60.5,
-                              80.5, 106.5,  141.5,  
-                              181.5,    243.5,  281.5,
-                              328.5,    390.5,  465.5,  580.5), 
+ladder <- data.frame(dist = c(), 
                      mw = c(1000, 900, 800, 
                             700, 600, 500,
                             400, 300, 250, 
