@@ -226,7 +226,93 @@ print()
 ```
 
 ```{r}
+<<<<<<< HEAD
+# Create a data frame of known distances and molecular weights
+ladder <- data.frame(dist = c(), 
+                     mw = c(1000, 900, 800, 
+                            700, 600, 500,
+                            400, 300, 250, 
+                            200, 150, 100, 50))
+            
+
+# Create a new data frame of unknowns
+unknown <- data.frame(dist = c(470.5,   391.5,  528.5,
+                               421.5,   507.5))
+
+
+ #Fit the model
+cal <- lm(log(mw) ~ dist, data = ladder)
+
+# Check model performance, R^2 should be ~ 1.
+summary(cal)
+
+## 
+## Call:
+## lm(formula = log(mw) ~ dist, data = ladder)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.054731 -0.040851 -0.001577  0.034241  0.063743 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  6.9957281  0.0200403  349.08  < 2e-16 ***
+## dist        -0.0052316  0.0000712  -73.47 3.69e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.0432 on 11 degrees of freedom
+## Multiple R-squared:  0.998,  Adjusted R-squared:  0.9978 
+## F-statistic:  5398 on 1 and 11 DF,  p-value: 3.691e-16
+
+preds <- exp(predict(cal, newdata = unknown)
+             
+             
+```
+=======
+>>>>>>> e971a3209c20d63f07bead899179bf3cae621f11
 
 ```
 
+```{r}
+
+library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(dplyr)
+
+ladder <- data.frame(dist = c(29, 43.5, 60.5, #x-verdier skal inn her
+                              80.5, 106.5,  141.5,  
+                              181.5,    243.5,  281.5,
+                              328.5,    390.5,  465.5,  580.5), 
+                     mw = c(1000, 900, 800, 
+                            700, 600, 500,
+                            400, 300, 250, 
+                            200, 150, 100, 50))
+            
+
+# Create a new data frame of unknowns
+unknown <- data.frame(dist = c(470.5,   391.5,  528.5,
+                               421.5,   507.5)) #overskuddsdata skal inn her. Like mange 
+
+ladder %>%
+  ggplot(aes(dist,log(mw)) + geom_point() + geom_smooth(method = "lm")
+         
+
+mod <- lm (log(mw) tilde dist, data = ladder)
+
+preds <- exp(predict(cal, newdata = unknown)
+
+summary(mod)
+
+ #Fit the model
+cal <- lm(log(mw) ~ dist, data = ladder)
+
+# Check model performance, R^2 should be ~ 1.
+summary(cal)
+         
+
+dna_fragment
+    
+```
 
