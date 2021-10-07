@@ -253,6 +253,7 @@ preds <- exp(predict(cal, newdata = unknown))
 
 preds
 
+round(preds,2)
 ```
 
 
@@ -303,7 +304,7 @@ print()
 
 ## Resultater 
 Typefeil er ved 4mmol laktat er `r cv4`% og ved 2mmol laktat er den `r cv2`%
-Predikerte størrelser på DNA-fragmentene er `r preds`.
+Predikerte størrelser på DNA-fragmentene er `r round(preds,2)`.
 
 I datasettet hypertrophy finner vi flere forskjellige variabler tilknyttet muskelvekst. Blant annet finnes det en måling av deltakernes testosteronverdier ved tre tidspunkt fra intervensjonen, og mager kroppsmasse målt i DXA ved tre tidspunkter. Vi ville se på en eventuell korrelasjon mellom den gjennomsnittlige testosteronverdien  og endringen i mager kroppsmasse fra test 1 til 3. 
 
