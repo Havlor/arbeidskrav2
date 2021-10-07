@@ -301,6 +301,8 @@ print()
 
 ```
 
+
+
 ## Resultater 
 Typefeil er ved 4mmol laktat er `r cv4`% og ved 2mmol laktat er den `r cv2`%
 Predikerte størrelser på DNA-fragmentene er `r preds`.
