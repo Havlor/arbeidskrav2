@@ -256,6 +256,51 @@ preds
 ```
 
 
+```{r}
+library(exscidata); library(tidyverse); library(dplyr)
+data("hypertrophy")
+glimpse(hypertrophy)
+
+
+Testo_DXA <- hypertrophy %>%
+  select(PARTICIPANT, DXA_LBM_T1:DXA_LBM_T3, TESTOSTERONE_T1:TESTOSTERONE_T3) %>%
+  rowwise() %>%
+  mutate(testoavg. = mean(c(TESTOSTERONE_T1, TESTOSTERONE_T2, TESTOSTERONE_T3), na.rm=TRUE)) %>%
+
+  ungroup() %>%
+  mutate(DXA_change = DXA_LBM_T3 - DXA_LBM_T1) %>%
+  group_by() %>%
+  select(PARTICIPANT, testoavg., DXA_change) %>%
+  filter(! is.nan(testoavg.)) %>%
+  
+  print()
+  
+  
+# Fit the model
+
+m1 <- lm(DXA_change ~ testoavg., data = Testo_DXA) %>%
+
+summary(m1) %>%
+  print()
+
+
+#Reg
+
+library(broom) 
+
+tidy(m1) %>%
+  print()
+ 
+
+#plotte figur
+
+Testo_DXA %>%
+  ggplot(aes(testoavg., DXA_change)) + geom_point(shape = 19) + theme_minimal() + geom_smooth(method = "lm") + labs(x = "Gjennomsnittlig testosteron", y = "Endring i DXA") 
+
+print()
+
+```
+
 ## Resultater 
 Typefeil er ved 4mmol laktat er `r cv4`% og ved 2mmol laktat er den `r cv2`%
 Predikerte størrelser på DNA-fragmentene er `r preds`.
