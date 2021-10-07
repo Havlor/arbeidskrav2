@@ -68,7 +68,9 @@ preds
 
 preds <- exp(predict(cal, newdata = unknown)
              
-
+preds
+            
+             
 ```
 
 You can also embed plots, for example:

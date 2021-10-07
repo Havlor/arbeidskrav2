@@ -47,3 +47,38 @@
    Pages="1--15",
    Month="Jul"
 }
+
+@Article{Florini,
+   Author="Florini, J. R. ",
+   Title="{{E}ffects of testosterone on qualitative pattern of protein synthesis in skeletal muscle}",
+   Journal="Biochemistry",
+   Year="1970",
+   Volume="9",
+   Number="4",
+   Pages="909--912",
+   Month="Feb"
+}
+
+@Article{Mauras,
+   Author="Mauras, N.  and Hayes, V.  and Welch, S.  and Rini, A.  and Helgeson, K.  and Dokler, M.  and Veldhuis, J. D.  and Urban, R. J. ",
+   Title="{{T}estosterone deficiency in young men: marked alterations in whole body protein kinetics, strength, and adiposity}",
+   Journal="J Clin Endocrinol Metab",
+   Year="1998",
+   Volume="83",
+   Number="6",
+   Pages="1886--1892",
+   Month="Jun"
+}
+
+
+@Article{Ferrando,
+   Author="Ferrando, A. A.  and Sheffield-Moore, M.  and Yeckel, C. W.  and Gilkison, C.  and Jiang, J.  and Achacosa, A.  and Lieberman, S. A.  and Tipton, K.  and Wolfe, R. R.  and Urban, R. J. ",
+   Title="{{T}estosterone administration to older men improves muscle function: molecular and physiological mechanisms}",
+   Journal="Am J Physiol Endocrinol Metab",
+   Year="2002",
+   Volume="282",
+   Number="3",
+   Pages="E601--607",
+   Month="Mar"
+   
+   }

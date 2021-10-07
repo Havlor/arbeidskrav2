@@ -1,11 +1,9 @@
 ---
-title: "Arbeidskrav2"
-author: "Håvard Crantz Lorentzen, Hermann Moen, Margit Dahl Sørensen, Jacob Mollatt"
+title: "lac"
+author: "Håvard Crantz Lorentzen"
 date: "28 9 2021"
-output:
-  word_document: default
-  html_document: default
-editor_options:
+output: html_document
+editor_options: 
   chunk_output_type: console
 ---
 
@@ -223,21 +221,23 @@ print()
   cv4 <- round(TE4$cv, 2)
   cv2 <- round(TE2$cv, 2)
   
+  
+  ## Resultater  Typefeil er ved 4mmol laktat er `r cv4`% og ved 2mmol laktat er den `r cv2`%
 ```
 
-
 ```{r}
-
-ladder <- data.frame(dist = c(1.0,25.5,63.0,111.0,165.5,241.0,332.5,460.5,540.5,637.5), 
-                     
+<<<<<<< HEAD
+# Create a data frame of known distances and molecular weights
+ladder <- data.frame(dist = c(), 
                      mw = c(1000, 900, 800, 
                             700, 600, 500,
                             400, 300, 250, 
-                            200))
+                            200, 150, 100, 50))
             
 
 # Create a new data frame of unknowns
-unknown <- data.frame(dist = c(95.5,303.8,413.8,95.5,300.0,409.5))
+unknown <- data.frame(dist = c(470.5,   391.5,  528.5,
+                               421.5,   507.5))
 
 
  #Fit the model
@@ -246,63 +246,73 @@ cal <- lm(log(mw) ~ dist, data = ladder)
 # Check model performance, R^2 should be ~ 1.
 summary(cal)
 
-preds <- exp(predict(cal, newdata = unknown))
+## 
+## Call:
+## lm(formula = log(mw) ~ dist, data = ladder)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.054731 -0.040851 -0.001577  0.034241  0.063743 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  6.9957281  0.0200403  349.08  < 2e-16 ***
+## dist        -0.0052316  0.0000712  -73.47 3.69e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.0432 on 11 degrees of freedom
+## Multiple R-squared:  0.998,  Adjusted R-squared:  0.9978 
+## F-statistic:  5398 on 1 and 11 DF,  p-value: 3.691e-16
 
-preds
+preds <- exp(predict(cal, newdata = unknown)
+             
+             
+```
+=======
+>>>>>>> e971a3209c20d63f07bead899179bf3cae621f11
 
 ```
-
 
 ```{r}
-library(exscidata); library(tidyverse); library(dplyr)
-data("hypertrophy")
-glimpse(hypertrophy)
 
+library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(dplyr)
 
-Testo_DXA <- hypertrophy %>%
-  select(PARTICIPANT, DXA_LBM_T1:DXA_LBM_T3, TESTOSTERONE_T1:TESTOSTERONE_T3) %>%
-  rowwise() %>%
-  mutate(testoavg. = mean(c(TESTOSTERONE_T1, TESTOSTERONE_T2, TESTOSTERONE_T3), na.rm=TRUE)) %>%
+ladder <- data.frame(dist = c(29, 43.5, 60.5, #x-verdier skal inn her
+                              80.5, 106.5,  141.5,  
+                              181.5,    243.5,  281.5,
+                              328.5,    390.5,  465.5,  580.5), 
+                     mw = c(1000, 900, 800, 
+                            700, 600, 500,
+                            400, 300, 250, 
+                            200, 150, 100, 50))
+            
 
-  ungroup() %>%
-  mutate(DXA_change = DXA_LBM_T3 - DXA_LBM_T1) %>%
-  group_by() %>%
-  select(PARTICIPANT, testoavg., DXA_change) %>%
-  filter(! is.nan(testoavg.)) %>%
-  
-  print()
-  
-  
-# Fit the model
+# Create a new data frame of unknowns
+unknown <- data.frame(dist = c(470.5,   391.5,  528.5,
+                               421.5,   507.5)) #overskuddsdata skal inn her. Like mange 
 
-m1 <- lm(DXA_change ~ testoavg., data = Testo_DXA) %>%
+ladder %>%
+  ggplot(aes(dist,log(mw)) + geom_point() + geom_smooth(method = "lm")
+         
 
-summary(m1) %>%
-  print()
+mod <- lm (log(mw) tilde dist, data = ladder)
 
+preds <- exp(predict(cal, newdata = unknown)
 
-#Reg
+summary(mod)
 
-library(broom) 
+ #Fit the model
+cal <- lm(log(mw) ~ dist, data = ladder)
 
-tidy(m1) %>%
-  print()
- 
+# Check model performance, R^2 should be ~ 1.
+summary(cal)
+         
 
-#plotte figur
-
-Testo_DXA %>%
-  ggplot(aes(testoavg., DXA_change)) + geom_point(shape = 19) + theme_minimal() + geom_smooth(method = "lm") + labs(x = "Gjennomsnittlig testosteron", y = "Endring i DXA") 
-
-print()
-
+dna_fragment
+    
 ```
-
-## Resultater 
-Typefeil er ved 4mmol laktat er `r cv4`% og ved 2mmol laktat er den `r cv2`%
-Predikerte størrelser på DNA-fragmentene er `r preds`.
-
-I datasettet hypertrophy finner vi flere forskjellige variabler tilknyttet muskelvekst. Blant annet finnes det en måling av deltakernes testosteronverdier ved tre tidspunkt fra intervensjonen, og mager kroppsmasse målt i DXA ved tre tidspunkter. Vi ville se på en eventuell korrelasjon mellom den gjennomsnittlige testosteronverdien  og endringen i mager kroppsmasse fra test 1 til 3. 
-
-Testosterone er et potent anabolsk hormon, som stimulerer muskel protein syntesen[1,2], og forbedrer intramuskulært opptak av aminosyrer,[3] som sammen resulterer i en forbedring i total protein balanse.[4] Basert på dette ser vi for oss at testosteron nivået, vil ha en positiv innvirkning på endringen i mager kroppsmasse.  
 
