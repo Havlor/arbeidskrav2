@@ -3,6 +3,7 @@ title: "Arbeidskrav2"
 author: "Håvard Crantz Lorentzen, Hermann Moen, Margit Dahl Sørensen, Jacob Mollatt"
 date: "28 9 2021"
 output:
+  bibliography: referanser
   word_document: default
   pdf_document: default
   html_document: default

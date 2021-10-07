@@ -32,3 +32,14 @@
    Month="Mar"
    
    }
+   
+ @Article{Hopkins,
+   Author="Hopkins, W. G. ",
+   Title="{{M}easures of reliability in sports medicine and science}",
+   Journal="Sports Med",
+   Year="2000",
+   Volume="30",
+   Number="1",
+   Pages="1--15",
+   Month="Jul"
+}
