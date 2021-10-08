@@ -3,16 +3,16 @@ title: "Arbeidskrav2"
 author: "Håvard Crantz Lorentzen, Hermann Moen, Margit Dahl Sørensen, Jacob Mollatt"
 date: "28 9 2021"
 output:
-  bibliography: referanser.bib
-  word_document: default
   pdf_document: default
+  word_document: default
+  bibliography: referanser.bib
   html_document: default
 editor_options:
   chunk_output_type: console
 ---
 
 
-```{r setup, include=FALSE, warning=FALSE, echo=TRUE}
+```{r setup, include=FALSE, warning=FALSE, echo=TRUE, error=FALSE}
 library(tidyverse)
 library(readxl)
 library(ggplot2)
@@ -122,7 +122,7 @@ lactate_threshold2 <- ndf %>%
   filter(abs(predictions - 2) == min(abs(predictions - 2)))
 ```
 
-```{r}ti
+```{r}
 
 lactate <- read_excel("data til laktatprofil.xlsx", na="NA")
 
@@ -261,7 +261,6 @@ round(preds,2)
 ```{r}
 library(exscidata); library(tidyverse); library(dplyr)
 data("hypertrophy")
-glimpse(hypertrophy)
 
 
 Testo_DXA <- hypertrophy %>%
@@ -273,16 +272,14 @@ Testo_DXA <- hypertrophy %>%
   mutate(DXA_change = DXA_LBM_T3 - DXA_LBM_T1) %>%
   group_by() %>%
   select(PARTICIPANT, testoavg., DXA_change) %>%
-  filter(! is.nan(testoavg.)) %>%
-  
-  print()
+  filter(! is.nan(testoavg.)) 
   
   
 # Fit the model
 
-m1 <- lm(DXA_change ~ testoavg., data = Testo_DXA) %>%
+TDXA <- lm(DXA_change ~ testoavg., data = Testo_DXA) %>%
 
-summary(m1) %>%
+summary(TDXA) %>%
   print()
 
 
@@ -290,14 +287,14 @@ summary(m1) %>%
 
 library(broom) 
 
-tidy(m1) %>%
+tidy(TDXA) %>%
   print()
  
 
 #plotte figur
 
 Testo_DXA %>%
-  ggplot(aes(testoavg., DXA_change)) + geom_point(shape = 19) + theme_minimal() + geom_smooth(method = "lm") + labs(x = "Gjennomsnittlig testosteron", y = "Endring i DXA") 
+  ggplot(aes(testoavg., DXA_change)) + geom_point(shape = 19) + theme_minimal() + geom_smooth(method = "lm") + labs(x = "Gjennomsnittlig testosteron", y = "Endring i DXA") %>%
 
 print()
 
@@ -311,7 +308,7 @@ I datasettet hypertrophy finner vi flere forskjellige variabler tilknyttet muske
 
 ##Diskusjon
 
-Testosteron er et potent anabolsk hormon, som stimulerer muskel-proteinsyntesen[@Florini; @Mauras], og forbedrer intramuskulært opptak av aminosyrer,[@Vingren] som sammen resulterer i en forbedring i total protein balanse[@Ferrando]. Basert på dette ser vi for oss at testosteron nivået, vil ha en positiv innvirkning på endringen i mager kroppsmasse.
+Testosteron er et potent anabolsk hormon, som stimulerer muskel-proteinsyntesen[@Florini; @Mauras], og forbedrer intramuskulært opptak av aminosyrer[@Vingren] som sammen resulterer i en forbedring i total protein balanse[@Ferrando]. Basert på dette ser vi for oss at testosteron nivået, vil ha en positiv innvirkning på endringen i mager kroppsmasse.
 
 For hver økning i testosteron vil endringen i mager kroppsmasse endres med -0,00434 +- 0,00167std.. Dette betyr i praksis at høyere testosteron ga mindre endring i mager kroppsmasse p=0,0157. P-verdien forteller oss hvor overraskende utfallet er hvis null hypotesen er sann. Altså vil det være et veldig overraskende funn hvis null hypotesen var sann, og vi kan kalle funnet statistisk signinfikant p</=0,05, når signifikans grensen er satt til 0,05 Std. er en forkortelse for standard avvik, og viser oss det gjennomsnittelige avviket fra gjennomsnittet i målingen. 
 
