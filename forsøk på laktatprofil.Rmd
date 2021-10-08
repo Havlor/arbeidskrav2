@@ -3,7 +3,7 @@ title: "Arbeidskrav2"
 author: "Håvard Crantz Lorentzen, Hermann Moen, Margit Dahl Sørensen, Jacob Mollatt"
 date: "28 9 2021"
 output:
-  bibliography: referanser
+  bibliography: referanser.bib
   word_document: default
   pdf_document: default
   html_document: default
@@ -317,7 +317,7 @@ For hver økning i testosteron vil endringen i mager kroppsmasse endres med -0,0
 
 Vi så for oss en sammenheng mellom gjennomsnittlig testosteron verdi, og endringen i mager kroppsmasse. Vi tenkte korrelasjonen skulle være positiv, altså mere testosteron, ville resultere i større økning i mager masse. Dette er basert på litteratur nevnt over. Det viste seg at for hver verdi med testosteron ville den magre kroppsmassen endres med -0,00434, p=0,0157. 
 
-Vi ønsker å vite om dette resultatet er noe vi kan stole på, og dermed kunne late som at funnet her er en sannhet. Vi må derfor kunne si noe om hvor reliabelt det er, og hvor sannsynlig det er at forskjellen i dataen skyldes sammenhengen mellom variablene og ikke støy. Standard feil er et estimat på reliabiliteten til dataene. Reliabiliteten kan forklares som hvor stor verdien til den tilfeldige variasjonen i et mål vil være fra gang til gang, når målet er gjort under like forhold [@Hopkins] Standardfeilen beregnes ved hjelp av «within subject standard deviation». Dette datasettet ga oss en standardfeil i målingene på 0,00167. 
+Vi ønsker å vite om dette resultatet er noe vi kan stole på, og dermed kunne late som at funnet her er en sannhet. Vi må derfor kunne si noe om hvor reliabelt det er, og hvor sannsynlig det er at forskjellen i dataen skyldes sammenhengen mellom variablene og ikke støy. Standard feil er et estimat på reliabiliteten til dataene. Reliabiliteten kan forklares som hvor stor verdien til den tilfeldige variasjonen i et mål vil være fra gang til gang, når målet er gjort under like forhold [@Hopkins]. Standardfeilen beregnes ved hjelp av «within subject standard deviation». Dette datasettet ga oss en standardfeil i målingene på 0,00167. 
 
 Nå vet vi hvor mye som kan forventes skyldes støy, og vi ønsker nå å vite om funnet vårt om korrelasjonen er noe vi kan late som er sant.  Til dette vil vi bruke p-verdi. P-verdien forteller oss hvor overraskende utfallet er hvis null hypotesen er sann. Altså vil det være et veldig overraskende funn hvis null hypotesen var sann, og vi kan kalle funnet statistisk signinfikant p</=0,05, når signifikans grensen er satt til 0,05. Det betyr at i denne situasjonen kan vi late som at funnet er sant. 
 
